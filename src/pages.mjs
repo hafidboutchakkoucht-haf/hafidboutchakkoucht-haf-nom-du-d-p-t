@@ -10,7 +10,53 @@ const domains = x => [
   ['sustainable', x('Développement durable', 'Sustainable development'), x('Voyages écoresponsables, initiatives locales, entrepreneuriat ancré dans les territoires.', 'Green travel, local initiatives, entrepreneurship rooted in local areas.')],
   ['erasmus', x('Projets Erasmus+ et mobilité', 'Erasmus+ projects and mobility'), x('Échanges de jeunes, formations et partenariats cofinancés par l’Union européenne.', 'Youth exchanges, training courses and partnerships co-funded by the European Union.')],
 ];
-const motto = x => `<p class="motto">Dialogue<i></i>${x('Coopération', 'Cooperation')}<i></i>Inclusion</p>`;
+// Devise « Dialogue · Coopération · Inclusion » : [code, nom de la langue, trois mots, sens d'écriture]
+const mottoLangs = [
+  ['fr', 'Français', ['Dialogue', 'Coopération', 'Inclusion']], ['en', 'English', ['Dialogue', 'Cooperation', 'Inclusion']],
+  ['es', 'Español', ['Diálogo', 'Cooperación', 'Inclusión']], ['ar', 'العربية', ['حوار', 'تعاون', 'إدماج'], 'rtl'],
+  ['de', 'Deutsch', ['Dialog', 'Zusammenarbeit', 'Inklusion']], ['pt', 'Português', ['Diálogo', 'Cooperação', 'Inclusão']],
+  ['zh', '中文', ['对话', '合作', '包容']], ['it', 'Italiano', ['Dialogo', 'Cooperazione', 'Inclusione']],
+  ['el', 'Ελληνικά', ['Διάλογος', 'Συνεργασία', 'Συμπερίληψη']], ['tr', 'Türkçe', ['Diyalog', 'İş birliği', 'Kapsayıcılık']],
+  ['hi', 'हिन्दी', ['संवाद', 'सहयोग', 'समावेश']], ['pl', 'Polski', ['Dialog', 'Współpraca', 'Inkluzja']],
+  ['nl', 'Nederlands', ['Dialoog', 'Samenwerking', 'Inclusie']], ['uk', 'Українська', ['Діалог', 'Співпраця', 'Інклюзія']],
+  ['sw', 'Kiswahili', ['Mazungumzo', 'Ushirikiano', 'Ujumuishaji']], ['ro', 'Română', ['Dialog', 'Cooperare', 'Incluziune']],
+  ['ja', '日本語', ['対話', '協力', '包摂']], ['hu', 'Magyar', ['Párbeszéd', 'Együttműködés', 'Befogadás']],
+  ['sv', 'Svenska', ['Dialog', 'Samarbete', 'Inkludering']], ['ko', '한국어', ['대화', '협력', '포용']],
+  ['cs', 'Čeština', ['Dialog', 'Spolupráce', 'Inkluze']], ['bg', 'Български', ['Диалог', 'Сътрудничество', 'Приобщаване']],
+  ['fi', 'Suomi', ['Vuoropuhelu', 'Yhteistyö', 'Osallisuus']],
+];
+const motto = (x, lang) => {
+  const order = [...mottoLangs.filter(l => l[0] === lang), ...mottoLangs.filter(l => l[0] !== lang)];
+  const w = order[0][2];
+  return `<p class="motto" data-motto aria-label="${w.join(', ')}"><span aria-hidden="true">${w[0]}</span><i></i><span aria-hidden="true">${w[1]}</span><i></i><span aria-hidden="true">${w[2]}</span><small aria-hidden="true">${order[0][1]}</small></p>
+    <script type="application/json" id="motto-data">${JSON.stringify(order)}</script>`;
+};
+
+// Bandeau défilant : mots-clés de la mobilité et de la solidarité, [mot, code de langue]
+const ticker = [
+  [ // Solidarité · Échange · Coopération · Paix · Jeunesse
+    [['Solidarité', 'fr'], ['Solidaridad', 'es'], ['Solidarität', 'de'], ['تضامن', 'ar'], ['团结', 'zh'], ['Solidarność', 'pl'], ['Αλληλεγγύη', 'el'], ['Mshikamano', 'sw']],
+    [['Échange', 'fr'], ['Exchange', 'en'], ['Scambio', 'it'], ['Austausch', 'de'], ['Intercâmbio', 'pt'], ['Değişim', 'tr'], ['交流', 'ja'], ['Uitwisseling', 'nl']],
+    [['Coopération', 'fr'], ['Cooperación', 'es'], ['Cooperare', 'ro'], ['Együttműködés', 'hu'], ['Співпраця', 'uk'], ['सहयोग', 'hi'], ['Samarbete', 'sv'], ['تعاون', 'ar']],
+    [['Paix', 'fr'], ['Peace', 'en'], ['Paz', 'es'], ['Frieden', 'de'], ['سلام', 'ar'], ['和平', 'zh'], ['Мир', 'uk'], ['Amani', 'sw']],
+    [['Jeunesse', 'fr'], ['Youth', 'en'], ['Juventud', 'es'], ['Gioventù', 'it'], ['Jugend', 'de'], ['Młodzież', 'pl'], ['شباب', 'ar'], ['Gençlik', 'tr']],
+    [['Diversité', 'fr'], ['Diversity', 'en'], ['Diversidad', 'es'], ['Vielfalt', 'de'], ['Diversità', 'it'], ['تنوع', 'ar'], ['多样性', 'zh'], ['Diversidade', 'pt']],
+  ],
+  [ // Interculturalité · Inclusion · Dialogue · Mobilité · Citoyenneté · Ensemble
+    [['Interculturalité', 'fr'], ['Interculturality', 'en'], ['Interculturalidad', 'es'], ['Interculturalità', 'it'], ['Interkulturalität', 'de'], ['Interculturalidade', 'pt'], ['Interculturalitate', 'ro'], ['Interculturaliteit', 'nl']],
+    [['Inclusion', 'fr'], ['Inclusión', 'es'], ['Inclusione', 'it'], ['Inclusão', 'pt'], ['إدماج', 'ar'], ['包容', 'zh'], ['समावेश', 'hi'], ['Inklusion', 'de']],
+    [['Dialogue', 'fr'], ['Diálogo', 'es'], ['Dialog', 'de'], ['حوار', 'ar'], ['对话', 'zh'], ['Διάλογος', 'el'], ['Párbeszéd', 'hu'], ['संवाद', 'hi']],
+    [['Mobilité', 'fr'], ['Mobility', 'en'], ['Movilidad', 'es'], ['Mobilità', 'it'], ['Mobilität', 'de'], ['Mobilidade', 'pt'], ['Mobilność', 'pl'], ['Hareketlilik', 'tr']],
+    [['Citoyenneté', 'fr'], ['Citizenship', 'en'], ['Ciudadanía', 'es'], ['Cittadinanza', 'it'], ['Cidadania', 'pt'], ['مواطنة', 'ar'], ['Cetățenie', 'ro'], ['Obywatelstwo', 'pl']],
+    [['Ensemble', 'fr'], ['Together', 'en'], ['Juntos', 'es'], ['Insieme', 'it'], ['Gemeinsam', 'de'], ['معاً', 'ar'], ['Pamoja', 'sw'], ['Разом', 'uk']],
+  ],
+];
+const tickerRow = (row, alt) => {
+  const items = [];
+  for (let i = 0; i < 8; i++) for (const group of row) items.push(group[i]);   // alterne les mots-clés, puis change de langue
+  const html = items.map(([w, l]) => `<span><bdi lang="${l}">${w}</bdi><sup>${l.toUpperCase()}</sup></span>`).join('');
+  return `<div class="marquee${alt ? ' alt-row' : ''}"><div class="marquee-track">${html}${html}</div></div>`;
+};
 
 const partners2025 = [
   ['Cross Borders', 'France', 'France'], ['FTHIA in ACTION', 'Grèce', 'Greece'], ['DISSO', 'Italie', 'Italy'],
@@ -98,11 +144,11 @@ export const pages = {
     slug: { fr: '', en: 'en' },
     title: { fr: 'Mobilité européenne, échanges de jeunes Erasmus+ à Nantes', en: 'European mobility and Erasmus+ youth exchanges in Nantes' },
     desc: { fr: 'Cross Borders est une association de Rezé (Nantes) qui organise des échanges de jeunes et des projets Erasmus+ : mobilité, citoyenneté, entrepreneuriat, inclusion et coopération européenne.', en: 'Cross Borders is a non-profit based in Rezé (Nantes, France) running Erasmus+ youth exchanges and projects: mobility, citizenship, entrepreneurship, inclusion and European cooperation.' },
-    body: c => { const { x, url } = c; const themes = ['Dialogue', x('Coopération', 'Cooperation'), 'Inclusion', x('Mobilité', 'Mobility'), x('Citoyenneté', 'Citizenship')]; return `
+    body: c => { const { x, url } = c;  return `
 <section class="hero"><div class="wrap hero-grid">
   <div>
     <p class="eyebrow">${x('Association Erasmus+ · Rezé, Nantes', 'Erasmus+ non-profit · Rezé, Nantes')}</p>
-    ${motto(x)}
+    ${motto(x, c.lang)}
     <h1>${x('Ensemble, <em>au-delà</em> des frontières.', 'Together, <em>beyond</em> borders.')}</h1>
     <p class="lead">${x('Cross Borders ouvre l’Europe aux jeunes qui en sont le plus éloignés. Nous organisons des échanges de jeunes, des formations et des partenariats européens pour apprendre autrement, entreprendre et vivre ensemble.', 'Cross Borders opens Europe to the young people furthest from it. We run youth exchanges, training courses and European partnerships to learn differently, start projects and live together.')}</p>
     <div class="cta-row"><a class="btn" href="${url('join')}">${x('Trouver mon opportunité', 'Find my opportunity')}</a><a class="btn ghost" href="${url('projects')}">${x('Voir nos projets', 'See our projects')}</a></div>
@@ -111,7 +157,8 @@ export const pages = {
   <div class="map-card reveal">${heroMap(x)}<div class="caption"><span>47.19° N · 1.55° W</span><span>${x('Nos liens en Europe', 'Our links across Europe')}</span></div></div>
 </div></section>
 
-<div class="marquee" aria-hidden="true"><div class="marquee-track">${[...themes, ...themes, ...themes, ...themes].map(t => `<span>${t}</span>`).join('')}</div></div>
+<div aria-hidden="true">${tickerRow(ticker[0])}${tickerRow(ticker[1], true)}</div>
+<p class="sr">${x('Solidarité, échange, coopération, paix, jeunesse, diversité, interculturalité, inclusion, dialogue, mobilité, citoyenneté, ensemble : nos mots-clés, dans les langues du monde.', 'Solidarity, exchange, cooperation, peace, youth, diversity, interculturality, inclusion, dialogue, mobility, citizenship, together: our keywords, in the languages of the world.')}</p>
 
 <section><div class="wrap">
   <div class="head"><div><p class="eyebrow">${x('Ce que nous faisons', 'What we do')}</p><h2>${x('Cinq domaines, une même ambition', 'Five fields, one ambition')}</h2></div><a class="arrow" href="${url('about')}">${x('Découvrir l’association', 'About the association')}</a></div>

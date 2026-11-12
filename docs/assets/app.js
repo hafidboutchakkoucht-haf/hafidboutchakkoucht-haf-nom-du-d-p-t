@@ -23,6 +23,24 @@
   }), { rootMargin: '0px 0px -8% 0px' }) : null;
   d.querySelectorAll('.reveal').forEach(el => io ? io.observe(el) : el.classList.add('in'));
 
+  // Devise qui change de langue
+  const motto = d.querySelector('[data-motto]'), mottoData = d.getElementById('motto-data');
+  if (motto && mottoData && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const L = JSON.parse(mottoData.textContent), words = motto.querySelectorAll('span'), label = motto.querySelector('small');
+    let i = 0;
+    setInterval(() => {
+      if (d.hidden) return;
+      motto.classList.add('swap');
+      setTimeout(() => {
+        i = (i + 1) % L.length;
+        const [code, name, w, dir] = L[i];
+        words.forEach((el, k) => { el.textContent = w[k]; el.lang = code; el.dir = dir || 'ltr'; });
+        label.textContent = name; label.lang = code;
+        motto.classList.remove('swap');
+      }, 350);
+    }, 2600);
+  }
+
   // Quiz d'orientation
   const quizEl = d.querySelector('[data-quiz]'), quizData = d.getElementById('quiz-data');
   if (quizEl && quizData) {
