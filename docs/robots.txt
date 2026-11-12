@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://hafidboutchakkoucht-haf.github.io/hafidboutchakkoucht-haf-nom-du-d-p-t/sitemap.xml
