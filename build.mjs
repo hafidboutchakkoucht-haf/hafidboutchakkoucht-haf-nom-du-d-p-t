@@ -5,6 +5,7 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { pages } from './src/pages.mjs';
 import { site } from './src/site.mjs';
+import { mark } from './src/logo.mjs';
 
 const ROOT = dirname(fileURLToPath(import.meta.url));
 const OUT = join(ROOT, 'docs');
@@ -28,7 +29,7 @@ const euFlag = () => {
   return `<svg viewBox="0 0 90 60" role="img" aria-label="European Union"><rect width="90" height="60" fill="#003399"/><g fill="#FFCC00">${stars}</g></svg>`;
 };
 
-const logo = `<svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="18" fill="#0F1A3C"/><path d="M5 26 Q20 2 35 26" fill="none" stroke="#FFC43D" stroke-width="2.6" stroke-linecap="round"/><path d="M20 3v34" stroke="#F4EFE6" stroke-width="2" stroke-dasharray="3 3.4"/><circle cx="5.5" cy="26" r="3" fill="#F04E30"/><circle cx="34.5" cy="26" r="3" fill="#F04E30"/></svg>`;
+const logo = mark({ globe: 'currentColor', line: 'var(--logo-line,var(--paper))' }).replace(' role="img" aria-label="Cross Borders"><title>Cross Borders</title>', ' aria-hidden="true">');
 const icons = {
   sun: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>`,
   menu: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>`,
@@ -155,6 +156,7 @@ for (const id of Object.keys(pages)) for (const lang of LANGS) {
 writeFileSync(join(OUT, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map(u => `  <url><loc>${u}</loc></url>`).join('\n')}\n</urlset>\n`);
 writeFileSync(join(OUT, 'robots.txt'), `User-agent: *\nAllow: /\nSitemap: ${BASE}/sitemap.xml\n`);
 writeFileSync(join(OUT, '.nojekyll'), '');
+for (const [f, svg] of [['icon.svg', mark()], ['brand/logo-couleur.svg', mark()], ['brand/logo-fond-sombre.svg', mark({ globe: '#F4EFE6', line: '#0F1A3C' })], ['brand/logo-monochrome.svg', mark({ mode: 'mono' })], ['brand/logo-blanc.svg', mark({ mode: 'mono', color: '#FFFFFF' }).replaceAll('#F4EFE6', '#0F1A3C')]]) writeFileSync(join(OUT, 'assets', f), svg + '\n');
 writeFileSync(join(OUT, '404.html'), render('home', 'fr').replace(/(href|src)="\.\//g, `$1="${new URL(BASE + '/').pathname}`));
 writeFileSync(join(OUT, 'assets/site.webmanifest'), JSON.stringify({ name: site.name, short_name: site.name, start_url: '../', display: 'standalone', background_color: '#FBF6EE', theme_color: '#0F1A3C', icons: [{ src: 'icon.svg', sizes: 'any', type: 'image/svg+xml' }] }));
 console.log(`OK — ${urls.length} pages → docs/  (URL du site : ${BASE})`);
