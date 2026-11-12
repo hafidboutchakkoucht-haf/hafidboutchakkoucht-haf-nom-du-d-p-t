@@ -5,7 +5,6 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { pages } from './src/pages.mjs';
 import { site } from './src/site.mjs';
-import { mark } from './src/logo.mjs';
 
 const ROOT = dirname(fileURLToPath(import.meta.url));
 const OUT = join(ROOT, 'docs');
@@ -29,7 +28,6 @@ const euFlag = () => {
   return `<svg viewBox="0 0 90 60" role="img" aria-label="European Union"><rect width="90" height="60" fill="#003399"/><g fill="#FFCC00">${stars}</g></svg>`;
 };
 
-const logo = mark({ globe: 'currentColor', line: 'var(--logo-line,var(--paper))' }).replace(' role="img" aria-label="Cross Borders"><title>Cross Borders</title>', ' aria-hidden="true">');
 const icons = {
   sun: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>`,
   menu: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>`,
@@ -52,7 +50,7 @@ function render(id, lang) {
 
   const ld = [{
     '@context': 'https://schema.org', '@type': 'NGO', name: site.name, url: abs(''), email: site.email,
-    slogan: x(site.tagline.fr, site.tagline.en), logo: `${BASE}/assets/icon.svg`,
+    slogan: x(site.tagline.fr, site.tagline.en), logo: `${BASE}/assets/brand/icone.svg`,
     address: { '@type': 'PostalAddress', streetAddress: site.street, postalCode: site.zip, addressLocality: site.city, addressCountry: 'FR' },
     identifier: [{ '@type': 'PropertyValue', propertyID: 'RNA', value: site.rna }, { '@type': 'PropertyValue', propertyID: 'SIREN', value: site.siren }],
     knowsAbout: ['Erasmus+', 'Youth exchange', 'Non-formal education', 'Social inclusion', 'Rural entrepreneurship'],
@@ -77,8 +75,8 @@ function render(id, lang) {
 <meta property="og:image" content="${BASE}/assets/og.png">
 <meta property="og:locale" content="${x('fr_FR', 'en_GB')}">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#0F1A3C">
-<link rel="icon" href="${asset('icon.svg')}" type="image/svg+xml">
+<meta name="theme-color" content="#0B1F5E">
+<link rel="icon" href="${asset('brand/icone.svg')}" type="image/svg+xml">
 <link rel="manifest" href="${asset('site.webmanifest')}">
 <link rel="preload" href="${asset('fonts/bricolage-grotesque-latin-wght-normal.woff2')}" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="${asset('style.css')}">
@@ -89,7 +87,7 @@ function render(id, lang) {
 <a class="skip" href="#main">${x('Aller au contenu', 'Skip to content')}</a>
 <header class="site-header">
   <div class="wrap nav">
-    <a class="brand" href="${url('home')}" aria-label="${site.name} — ${x('accueil', 'home')}">${logo}<span>Cross<i>·</i>Borders</span></a>
+    <a class="brand" href="${url('home')}" aria-label="${site.name} — ${x('accueil', 'home')}"><img class="logo-full logo-light" src="${asset('brand/logo-horizontal.svg')}" alt="${site.name}" width="292" height="44"><img class="logo-full logo-dark" src="${asset('brand/logo-horizontal-fond-sombre.svg')}" alt="${site.name}" width="292" height="44" loading="lazy"><img class="logo-mark" src="${asset('brand/embleme.svg')}" alt="${site.name}" width="68" height="44"></a>
     <nav aria-label="${x('Navigation principale', 'Main navigation')}">
       <ul class="menu" id="menu">
         ${nav.map(([t, l]) => `<li><a href="${url(t)}"${isCurrent(t) ? ' aria-current="page"' : ''}>${l}</a></li>`).join('\n        ')}
@@ -110,7 +108,7 @@ ${page.body(ctx)}
   <div class="wrap">
     <div class="foot">
       <div>
-        <a class="brand" href="${url('home')}">${logo}<span>Cross<i>·</i>Borders</span></a>
+        <a class="brand" href="${url('home')}"><img src="${asset('brand/logo-horizontal-fond-sombre.svg')}" alt="${site.name}" width="292" height="44" loading="lazy"></a>
         <p>${x(site.tagline.fr, site.tagline.en)}</p>
         <p>${site.street}<br>${site.zip} ${site.city}, France<br><a href="mailto:${site.email}">${site.email}</a></p>
       </div>
@@ -156,7 +154,6 @@ for (const id of Object.keys(pages)) for (const lang of LANGS) {
 writeFileSync(join(OUT, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map(u => `  <url><loc>${u}</loc></url>`).join('\n')}\n</urlset>\n`);
 writeFileSync(join(OUT, 'robots.txt'), `User-agent: *\nAllow: /\nSitemap: ${BASE}/sitemap.xml\n`);
 writeFileSync(join(OUT, '.nojekyll'), '');
-for (const [f, svg] of [['icon.svg', mark()], ['brand/logo-couleur.svg', mark()], ['brand/logo-fond-sombre.svg', mark({ globe: '#F4EFE6', line: '#0F1A3C' })], ['brand/logo-monochrome.svg', mark({ mode: 'mono' })], ['brand/logo-blanc.svg', mark({ mode: 'mono', color: '#FFFFFF' }).replaceAll('#F4EFE6', '#0F1A3C')]]) writeFileSync(join(OUT, 'assets', f), svg + '\n');
 writeFileSync(join(OUT, '404.html'), render('home', 'fr').replace(/(href|src)="\.\//g, `$1="${new URL(BASE + '/').pathname}`));
-writeFileSync(join(OUT, 'assets/site.webmanifest'), JSON.stringify({ name: site.name, short_name: site.name, start_url: '../', display: 'standalone', background_color: '#FBF6EE', theme_color: '#0F1A3C', icons: [{ src: 'icon.svg', sizes: 'any', type: 'image/svg+xml' }] }));
+writeFileSync(join(OUT, 'assets/site.webmanifest'), JSON.stringify({ name: site.name, short_name: site.name, start_url: '../', display: 'standalone', background_color: '#FAF8F3', theme_color: '#0B1F5E', icons: [{ src: 'brand/icone.svg', sizes: 'any', type: 'image/svg+xml' }] }));
 console.log(`OK — ${urls.length} pages → docs/  (URL du site : ${BASE})`);

@@ -1,6 +1,17 @@
 // Contenu de toutes les pages, en français et en anglais.
 // x(fr, en) renvoie le texte dans la langue de la page ; url(id) le lien vers une autre page.
 
+import { domainIcons } from './brand-icons.mjs';
+
+const domains = x => [
+  ['cooperation', x('Coopération internationale', 'International cooperation'), x('Des projets construits avec des associations partenaires, en Europe et au-delà.', 'Projects built with partner organisations, in Europe and beyond.')],
+  ['education', x('Éducation & formation', 'Education & training'), x('Apprendre par la pratique, en groupe, grâce à l’éducation non formelle.', 'Learning by doing, in a group, through non-formal education.')],
+  ['youth', x('Jeunesse & inclusion sociale', 'Youth & social inclusion'), x('Priorité aux jeunes ayant moins d’opportunités, aux femmes et aux territoires ruraux.', 'Priority to young people with fewer opportunities, women and rural areas.')],
+  ['sustainable', x('Développement durable', 'Sustainable development'), x('Voyages écoresponsables, initiatives locales, entrepreneuriat ancré dans les territoires.', 'Green travel, local initiatives, entrepreneurship rooted in local areas.')],
+  ['erasmus', x('Projets Erasmus+ et mobilité', 'Erasmus+ projects and mobility'), x('Échanges de jeunes, formations et partenariats cofinancés par l’Union européenne.', 'Youth exchanges, training courses and partnerships co-funded by the European Union.')],
+];
+const motto = x => `<p class="motto">Dialogue<i></i>${x('Coopération', 'Cooperation')}<i></i>Inclusion</p>`;
+
 const partners2025 = [
   ['Cross Borders', 'France', 'France'], ['FTHIA in ACTION', 'Grèce', 'Greece'], ['DISSO', 'Italie', 'Italy'],
   ['MINHA RUA', 'Portugal', 'Portugal'], ['EUDUCATE', 'Espagne', 'Spain'],
@@ -87,11 +98,12 @@ export const pages = {
     slug: { fr: '', en: 'en' },
     title: { fr: 'Mobilité européenne, échanges de jeunes Erasmus+ à Nantes', en: 'European mobility and Erasmus+ youth exchanges in Nantes' },
     desc: { fr: 'Cross Borders est une association de Rezé (Nantes) qui organise des échanges de jeunes et des projets Erasmus+ : mobilité, citoyenneté, entrepreneuriat, inclusion et coopération européenne.', en: 'Cross Borders is a non-profit based in Rezé (Nantes, France) running Erasmus+ youth exchanges and projects: mobility, citizenship, entrepreneurship, inclusion and European cooperation.' },
-    body: c => { const { x, url } = c; const themes = [x('Mobilité', 'Mobility'), x('Citoyenneté', 'Citizenship'), x('Entrepreneuriat', 'Entrepreneurship'), 'Inclusion', x('Coopération européenne', 'European cooperation')]; return `
+    body: c => { const { x, url } = c; const themes = ['Dialogue', x('Coopération', 'Cooperation'), 'Inclusion', x('Mobilité', 'Mobility'), x('Citoyenneté', 'Citizenship')]; return `
 <section class="hero"><div class="wrap hero-grid">
   <div>
     <p class="eyebrow">${x('Association Erasmus+ · Rezé, Nantes', 'Erasmus+ non-profit · Rezé, Nantes')}</p>
-    <h1>${x('Agir <em>au-delà</em> des frontières, construire l’avenir ensemble.', 'Acting <em>beyond</em> borders, building the future together.')}</h1>
+    ${motto(x)}
+    <h1>${x('Ensemble, <em>au-delà</em> des frontières.', 'Together, <em>beyond</em> borders.')}</h1>
     <p class="lead">${x('Cross Borders ouvre l’Europe aux jeunes qui en sont le plus éloignés. Nous organisons des échanges de jeunes, des formations et des partenariats européens pour apprendre autrement, entreprendre et vivre ensemble.', 'Cross Borders opens Europe to the young people furthest from it. We run youth exchanges, training courses and European partnerships to learn differently, start projects and live together.')}</p>
     <div class="cta-row"><a class="btn" href="${url('join')}">${x('Trouver mon opportunité', 'Find my opportunity')}</a><a class="btn ghost" href="${url('projects')}">${x('Voir nos projets', 'See our projects')}</a></div>
     <div class="hero-meta"><span class="pill"><b></b>${x('Cofinancé par l’Union européenne', 'Co-funded by the European Union')}</span><span class="pill">${x('Certificat Youthpass', 'Youthpass certificate')}</span><span class="pill">${x('Éducation non formelle', 'Non-formal learning')}</span></div>
@@ -102,13 +114,8 @@ export const pages = {
 <div class="marquee" aria-hidden="true"><div class="marquee-track">${[...themes, ...themes, ...themes, ...themes].map(t => `<span>${t}</span>`).join('')}</div></div>
 
 <section><div class="wrap">
-  <div class="head"><div><p class="eyebrow">${x('Ce que nous faisons', 'What we do')}</p><h2>${x('Quatre façons de faire tomber les frontières', 'Four ways to bring borders down')}</h2></div><a class="arrow" href="${url('about')}">${x('Découvrir l’association', 'About the association')}</a></div>
-  <div class="grid g4">
-    <div class="card lift c-coral reveal"><div class="icon">🌍</div><h3>${x('Échanges de jeunes', 'Youth exchanges')}</h3><p>${x('Des séjours de groupe entre jeunes de plusieurs pays, autour d’un thème de société, avec ateliers, visites et soirées interculturelles.', 'Group stays bringing together young people from several countries around a social theme, with workshops, visits and intercultural evenings.')}</p></div>
-    <div class="card lift c-sun reveal"><div class="icon">🎓</div><h3>${x('Formations', 'Training courses')}</h3><p>${x('Des temps d’apprentissage par la pratique pour les jeunes et celles et ceux qui les accompagnent.', 'Hands-on learning for young people and for those who support them.')}</p></div>
-    <div class="card lift c-sea reveal"><div class="icon">🤝</div><h3>${x('Partenariats européens', 'European partnerships')}</h3><p>${x('Un réseau d’associations en Grèce, en Italie, au Portugal, en Espagne et au-delà pour construire des projets communs.', 'A network of NGOs in Greece, Italy, Portugal, Spain and beyond to build shared projects.')}</p></div>
-    <div class="card lift c-leaf reveal"><div class="icon">🌱</div><h3>${x('Inclusion & entrepreneuriat', 'Inclusion & entrepreneurship')}</h3><p>${x('Une priorité : les jeunes ayant moins d’opportunités, les femmes et les territoires ruraux.', 'One priority: young people with fewer opportunities, women and rural areas.')}</p></div>
-  </div>
+  <div class="head"><div><p class="eyebrow">${x('Ce que nous faisons', 'What we do')}</p><h2>${x('Cinq domaines, une même ambition', 'Five fields, one ambition')}</h2></div><a class="arrow" href="${url('about')}">${x('Découvrir l’association', 'About the association')}</a></div>
+  <div class="grid g5">${domains(x).map(([k, t, d]) => `<div class="card lift domain reveal">${domainIcons[k]}<h3>${t}</h3><p>${d}</p></div>`).join('')}</div>
 </div></section>
 
 <section class="alt"><div class="wrap">
@@ -195,6 +202,11 @@ ${head(c, [[null, x('L’association', 'About')]], x('Qui sommes-nous', 'Who we 
     <div class="term"><dt>${x('Numéro RNA', 'RNA number')}</dt><dd>${site.rna}</dd></div>
     <div class="term"><dt>SIREN / SIRET</dt><dd>${site.siren} / ${site.siret}</dd></div>
   </dl>
+</div></section>
+<section><div class="wrap">
+  <div class="head"><div><p class="eyebrow">${x('Notre identité', 'Our identity')}</p><h2>${x('Dialogue, coopération, inclusion', 'Dialogue, cooperation, inclusion')}</h2><p class="lead">${x('Un globe tourné vers l’Europe, trois personnes les bras levés, un arc d’étoiles : notre logo dit ce que nous faisons, ensemble, au-delà des frontières.', 'A globe turned towards Europe, three people with raised arms, an arc of stars: our logo says what we do, together, beyond borders.')}</p></div></div>
+  <div class="identity reveal"><img src="${c.asset('brand/bandeau-complet.svg')}" alt="${x('Logo Cross Borders : Dialogue, Coopération, Inclusion. Ensemble, au-delà des frontières. Cinq domaines : coopération internationale, éducation et formation, jeunesse et inclusion sociale, développement durable, projets Erasmus+ et mobilité.', 'Cross Borders logo: Dialogue, Cooperation, Inclusion. Together, beyond borders. Five fields: international cooperation, education and training, youth and social inclusion, sustainable development, Erasmus+ projects and mobility.')}" width="1540" height="1070" loading="lazy"></div>
+  <div class="downloads"><a class="btn small ghost" href="${c.asset('brand/logo-vertical.png')}" download>${x('Logo (PNG)', 'Logo (PNG)')}</a><a class="btn small ghost" href="${c.asset('brand/logo-vertical.svg')}" download>${x('Logo (SVG)', 'Logo (SVG)')}</a><a class="btn small ghost" href="${c.asset('brand/bandeau-complet.png')}" download>${x('Bandeau complet (PNG)', 'Full banner (PNG)')}</a></div>
 </div></section>
 ${cta(c)}`; },
   },
@@ -486,8 +498,8 @@ ${head(c, [[null, x('Mentions légales', 'Legal notice')]], x('Informations lég
   <p>${x('Les textes et éléments graphiques de ce site sont la propriété de Cross Borders, sauf mention contraire. Leur reproduction est autorisée à des fins non commerciales, à condition d’en citer la source.', 'The texts and graphics on this site belong to Cross Borders unless stated otherwise. They may be reproduced for non-commercial purposes provided the source is credited.')}</p>
   <h2>${x('Financement européen', 'European funding')}</h2>
   <p>${x('Les projets présentés sont cofinancés par l’Union européenne dans le cadre du programme Erasmus+. Les points de vue et avis exprimés n’engagent que leurs auteurs et ne reflètent pas nécessairement ceux de l’Union européenne.', 'The projects presented are co-funded by the European Union under the Erasmus+ programme. Views and opinions expressed are those of the authors only and do not necessarily reflect those of the European Union.')}</p>
-  <h2>${x('Polices de caractères', 'Typefaces')}</h2>
-  <p>${x('Bricolage Grotesque et Inter, sous licence SIL Open Font License, hébergées sur ce site.', 'Bricolage Grotesque and Inter, under the SIL Open Font License, hosted on this site.')}</p>
+  <h2>${x('Crédits', 'Credits')}</h2>
+  <p>${x('Bricolage Grotesque et Inter, sous licence SIL Open Font License, hébergées sur ce site. Le logo utilise Montserrat et Kaushan Script (SIL Open Font License), des pictogrammes Lucide (licence ISC) et les données cartographiques Natural Earth (domaine public).', 'Bricolage Grotesque and Inter, under the SIL Open Font License, hosted on this site. The logo uses Montserrat and Kaushan Script (SIL Open Font License), Lucide icons (ISC licence) and Natural Earth map data (public domain).')}</p>
 </div></section>`; },
   },
 

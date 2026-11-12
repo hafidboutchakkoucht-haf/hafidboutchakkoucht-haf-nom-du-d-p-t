@@ -11,6 +11,7 @@ Site statique : aucune base de données, aucun cookie, aucune dépendance à ins
 | Textes de toutes les pages (FR et EN côte à côte) | `src/pages.mjs` |
 | Couleurs, typographie, mise en page | `src/assets/style.css` |
 | Quiz, filtres, liste de préparation | `src/assets/app.js` |
+| Fichiers du logo (SVG et PNG) | `src/assets/brand/` |
 
 Après chaque modification, régénérer le site :
 
@@ -29,3 +30,14 @@ Le site généré se trouve dans `docs/`. Ne modifiez pas `docs/` à la main : i
 ## Ajouter un projet
 
 Dans `src/pages.mjs`, dupliquer le bloc `p2026`, lui donner un nouvel identifiant et de nouvelles adresses (`slug`), puis ajouter sa carte dans la fonction `projectCards`.
+
+## Redessiner le logo
+
+Le logo est dessiné par `tools/make-logo.mjs` (globe, personnages, étoiles, textes convertis en tracés).
+Ce n'est nécessaire que pour modifier le logo lui-même :
+
+```bash
+cd tools && npm install && node make-logo.mjs
+```
+
+Les fichiers SVG sont réécrits dans `src/assets/brand/`. Relancer ensuite `node build.mjs` à la racine.

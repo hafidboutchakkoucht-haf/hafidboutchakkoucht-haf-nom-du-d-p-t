@@ -11,7 +11,7 @@ export const site = {
   siren: '928 086 446',
   siret: '928 086 446 00012',
   tagline: {
-    fr: 'Agir au-delà des frontières, construire l’avenir ensemble.',
-    en: 'Acting beyond borders, building the future together.',
+    fr: 'Ensemble, au-delà des frontières.',
+    en: 'Together, beyond borders.',
   },
 };
