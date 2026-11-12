@@ -67,7 +67,7 @@ li{margin:.3em 0}
 .chip-btn:hover{background:var(--paper-2);color:var(--ink)}
 .chip-btn svg{width:18px;height:18px}
 .burger{display:none}
-@media (max-width:1140px){
+@media (max-width:1260px){
   .burger{display:inline-grid}
   .menu{position:fixed;inset:72px 0 auto 0;flex-direction:column;background:var(--paper);padding:14px 20px 26px;border-bottom:1px solid var(--line);box-shadow:var(--shadow);display:none}
   .menu.open{display:flex}
@@ -284,3 +284,22 @@ form.contact{display:grid;gap:14px}
 .identity{background:#fff;border-radius:var(--radius);border:1px solid var(--line);padding:clamp(12px,3vw,32px);box-shadow:var(--shadow)}
 .identity img{width:100%;height:auto}
 .downloads{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+
+/* Série vidéo */
+.reels{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
+@media (max-width:900px){.reels{grid-auto-flow:column;grid-auto-columns:62%;grid-template-columns:none;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:10px}.reel{scroll-snap-align:start}}
+.reel{position:relative;display:block;border-radius:20px;overflow:hidden;aspect-ratio:9/16;background:#0B1F5E;text-decoration:none;color:#fff;box-shadow:var(--shadow);transition:transform .2s}
+.reel:hover{transform:translateY(-4px);color:#fff}
+.reel img{width:100%;height:100%;object-fit:cover}
+.reel-title{position:absolute;inset:auto 0 0 0;padding:44px 14px 14px;background:linear-gradient(transparent,#061238ee 55%);font:700 1rem/1.25 var(--display)}
+.reel-title small{display:block;font:650 .7rem var(--body);letter-spacing:.12em;text-transform:uppercase;color:#EFA91B;margin-bottom:.3em}
+.play{position:absolute;left:50%;top:72%;width:58px;height:58px;margin:-29px;border-radius:50%;background:#fffffff0;box-shadow:0 6px 20px #0005}
+.play::after{content:"";position:absolute;left:23px;top:17px;border-left:18px solid #0B1F5E;border-block:12px solid transparent}
+.episodes{display:grid;gap:clamp(28px,5vw,56px)}
+.episode{display:grid;grid-template-columns:minmax(0,320px) 1fr;gap:clamp(20px,4vw,48px);align-items:center;scroll-margin-top:100px}
+.episode:nth-child(even) video{order:2}
+.episode video{width:100%;height:auto;aspect-ratio:9/16;border-radius:24px;background:#0B1F5E;box-shadow:var(--shadow)}
+.episode h2{font-size:clamp(1.6rem,3.4vw,2.6rem)}
+.episode .num{font:800 .85rem var(--display);color:var(--coral-ink);letter-spacing:.12em;margin:0 0 .6em}
+.episode p{color:var(--ink-2);max-width:52ch}
+@media (max-width:700px){.episode{grid-template-columns:1fr}.episode video{max-width:340px;margin-inline:auto;order:0!important}}

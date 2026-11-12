@@ -43,7 +43,7 @@ function render(id, lang) {
   const other = lang === 'fr' ? 'en' : 'fr';
   const ctx = { lang, x, url, asset, esc, site, euFlag };
 
-  const nav = [['about', x('L’association', 'About')], ['projects', x('Projets', 'Projects')], ['join', x('Participer', 'Get involved')], ['resources', x('Ressources', 'Resources')], ['contact', 'Contact']];
+  const nav = [['about', x('L’association', 'About')], ['projects', x('Projets', 'Projects')], ['join', x('Participer', 'Get involved')], ['resources', x('Ressources', 'Resources')], ['videos', x('Vidéos', 'Videos')], ['contact', 'Contact']];
   const isCurrent = t => t === id || (t === 'projects' && page.parent === 'projects');
   const title = id === 'home' ? `${site.name} — ${page.title[lang]}` : `${page.title[lang]} — ${site.name}`;
   const desc = page.desc[lang];
@@ -121,7 +121,8 @@ ${page.body(ctx)}
         <li><a href="${url('resources', '#guides')}">${x('Guides Erasmus+', 'Erasmus+ guides')}</a></li>
         <li><a href="${url('resources', '#checklist')}">${x('Liste de préparation', 'Packing checklist')}</a></li>
         <li><a href="${url('resources', '#glossaire')}">${x('Glossaire', 'Glossary')}</a></li>
-        <li><a href="${url('resources', '#faq')}">FAQ</a></li></ul></div>
+        <li><a href="${url('resources', '#faq')}">FAQ</a></li>
+        <li><a href="${url('videos')}">${x('Série vidéo', 'Video series')}</a></li></ul></div>
       <div><h4>${x('Informations', 'Information')}</h4><ul>
         <li><a href="${url('legal')}">${x('Mentions légales', 'Legal notice')}</a></li>
         <li><a href="${url('privacy')}">${x('Confidentialité', 'Privacy')}</a></li>

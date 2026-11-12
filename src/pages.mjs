@@ -58,6 +58,16 @@ const tickerRow = (row, alt) => {
   return `<div class="marquee${alt ? ' alt-row' : ''}"><div class="marquee-track">${html}${html}</div></div>`;
 };
 
+// Série vidéo « Erasmus+ décrypté » : [titre FR, titre EN, résumé FR, résumé EN, durée ISO]
+const episodes = [
+  ['Ce n’est pas que pour les étudiants', 'It is not only for students', 'Erasmus+ en chiffres : qui part, combien, et pourquoi les jeunes hors université sont concernés.', 'Erasmus+ in numbers: who goes, how many, and why young people outside university are concerned.', 'PT1M4S'],
+  ['Trois portes pour partir', 'Three doors to go abroad', 'Échanges de jeunes, mobilité des animateurs de jeunesse, DiscoverEU : les trois entrées du volet Jeunesse.', 'Youth exchanges, youth worker mobility, DiscoverEU: the three ways into the Youth strand.', 'PT1M5S'],
+  ['Erasmus+ pour toutes et tous', 'Erasmus+ for everyone', 'Ce que le programme prévoit pour les jeunes ayant moins d’opportunités, et ce que cela donne chez nous.', 'What the programme provides for young people with fewer opportunities, and what it looks like with us.', 'PT1M1S'],
+  ['Monter un projet en 6 étapes', 'Setting up a project in 6 steps', 'Du besoin de départ à la diffusion des résultats : la méthode pour une association, et les erreurs à éviter.', 'From the initial need to sharing results: the method for an organisation, and the mistakes to avoid.', 'PT1M1S'],
+  ['Cross Borders en action', 'Cross Borders in action', 'Nos rendez-vous de 2025 et 2026, ce que les jeunes ont produit, et la suite.', 'Our 2025 and 2026 projects, what the young people produced, and what comes next.', 'PT1M5S'],
+];
+const euNote = x => x('Série cofinancée par l’Union européenne dans le cadre du programme Erasmus+. Les points de vue et avis exprimés n’engagent que leur auteur et ne reflètent pas nécessairement ceux de l’Union européenne.', 'Series co-funded by the European Union under the Erasmus+ programme. Views and opinions expressed are those of the author only and do not necessarily reflect those of the European Union.');
+
 const partners2025 = [
   ['Cross Borders', 'France', 'France'], ['FTHIA in ACTION', 'Grèce', 'Greece'], ['DISSO', 'Italie', 'Italy'],
   ['MINHA RUA', 'Portugal', 'Portugal'], ['EUDUCATE', 'Espagne', 'Spain'],
@@ -130,8 +140,8 @@ const projectCards = c => {
   const { x } = c;
   return projectCard(c, 'p2026', 'p2', ['Erasmus+', x('Inclusion', 'Inclusion'), x('Égalité', 'Equality')],
     x('Promouvoir l’inclusion socio-économique des femmes en milieu rural', 'Promoting the socio-economic inclusion of rural women'),
-    x('Neuf jours à Nantes pour comprendre les freins que rencontrent les femmes en milieu rural et imaginer des réponses concrètes.', 'Nine days in Nantes to understand the barriers rural women face and design concrete responses.'),
-    ['2026', `<b>${x('22 – 30 mars 2026', '22 – 30 March 2026')}</b>`, 'Nantes, France'])
+    x('25 jeunes de 5 pays réunis à Rezé pour comprendre les freins que rencontrent les femmes en milieu rural et imaginer des réponses concrètes.', '25 young people from 5 countries gathered in Rezé to understand the barriers rural women face and design concrete responses.'),
+    ['2026', `<b>${x('22 – 30 mars 2026', '22 – 30 March 2026')}</b>`, 'Rezé, France', x('5 pays', '5 countries')])
   + projectCard(c, 'p2025', 'p1', ['Erasmus+', x('Échange de jeunes', 'Youth exchange'), x('Entrepreneuriat', 'Entrepreneurship')],
     x('Jeunes : développez votre esprit d’entreprise en milieu rural !', 'Young people: develop your entrepreneurial spirit in rural areas!'),
     x('32 jeunes de 5 pays réunis pour faire de l’entrepreneuriat une réponse au chômage des jeunes dans les territoires ruraux.', '32 young people from 5 countries turning entrepreneurship into an answer to youth unemployment in rural areas.'),
@@ -171,6 +181,11 @@ export const pages = {
 </div></section>
 
 <section><div class="wrap">
+  <div class="head"><div><p class="eyebrow">${x('Série vidéo', 'Video series')}</p><h2>${x('Erasmus+ décrypté, en une minute', 'Erasmus+ decoded, in one minute')}</h2><p class="lead">${x('Cinq épisodes courts pour comprendre le programme, par le président de Cross Borders.', 'Five short episodes to understand the programme, by the president of Cross Borders.')}</p></div><a class="arrow" href="${url('videos')}">${x('Regarder la série', 'Watch the series')}</a></div>
+  <div class="reels">${episodes.map(([fr, en], i) => `<a class="reel reveal" href="${url('videos', '#ep' + (i + 1))}" aria-label="${x('Épisode', 'Episode')} ${i + 1} — ${x(fr, en)}"><img src="${c.asset(`videos/erasmus-decrypte-ep${i + 1}.jpg`)}" alt="" width="540" height="960" loading="lazy"><span class="play" aria-hidden="true"></span></a>`).join('')}</div>
+</div></section>
+
+<section class="alt"><div class="wrap">
   <div class="head"><div><p class="eyebrow">${x('En chiffres', 'In numbers')}</p><h2>${x('Notre échange de juin 2025', 'Our June 2025 exchange')}</h2></div></div>
   <div class="stats reveal">
     <div class="stat"><strong>32</strong><span>${x('jeunes de 18 à 30 ans', 'young people aged 18–30')}</span></div>
@@ -320,7 +335,11 @@ ${cta(c)}`; },
     title: { fr: 'Promouvoir l’inclusion socio-économique des femmes en milieu rural', en: 'Promoting the socio-economic inclusion of rural women' },
     desc: { fr: 'Projet Erasmus+ Jeunesse accueilli par Cross Borders à Nantes du 22 au 30 mars 2026 sur l’inclusion socio-économique des femmes en milieu rural.', en: 'Erasmus+ youth project hosted by Cross Borders in Nantes from 22 to 30 March 2026 on the socio-economic inclusion of rural women.' },
     body: c => { const { x, url } = c; return `
-${head(c, [['projects', x('Projets', 'Projects')], [null, '2026']], x('Erasmus+ Jeunesse · 22 – 30 mars 2026', 'Erasmus+ Youth · 22 – 30 March 2026'), x('Promouvoir l’inclusion socio-économique des femmes en milieu rural', 'Promoting the socio-economic inclusion of rural women'), x('Neuf jours à Nantes, avec des participant·es venu·es de plusieurs pays européens, pour comprendre ce qui freine la participation des femmes à la vie économique et sociale des campagnes, et y répondre.', 'Nine days in Nantes, with participants from several European countries, to understand what holds back women’s participation in the economic and social life of rural areas, and to respond.'))}
+${head(c, [['projects', x('Projets', 'Projects')], [null, '2026']], x('Erasmus+ Jeunesse · 22 – 30 mars 2026', 'Erasmus+ Youth · 22 – 30 March 2026'), x('Promouvoir l’inclusion socio-économique des femmes en milieu rural', 'Promoting the socio-economic inclusion of rural women'), x('Un échange de jeunes à Rezé : 25 jeunes de cinq pays pour comprendre ce qui freine la participation des femmes à la vie économique et sociale des campagnes, et y répondre.', 'A youth exchange in Rezé: 25 young people from five countries to understand what holds back women’s participation in the economic and social life of rural areas, and to respond.'))}
+<section><div class="wrap">
+  <div class="stats reveal"><div class="stat"><strong>25</strong><span>${x('jeunes, tous repartis avec un Youthpass', 'young people, all leaving with a Youthpass')}</span></div><div class="stat"><strong>5</strong><span>${x('pays : France, Türkiye, Italie, Allemagne, Hongrie', 'countries: France, Türkiye, Italy, Germany, Hungary')}</span></div><div class="stat"><strong>10</strong><span>${x('jeunes ayant moins d’opportunités', 'young people with fewer opportunities')}</span></div><div class="stat"><strong>2</strong><span>${x('prototypes : recyclage textile et apiculture', 'prototypes: textile recycling and beekeeping')}</span></div></div>
+  <p class="note" style="margin-top:20px">${x('Les jeunes ont aussi rédigé un guide de plaidoyer en 12 recommandations, et sept jeunes Rezéennes ont pris part aux ateliers.', 'The young people also wrote an advocacy guide with 12 recommendations, and seven young women from Rezé took part in the workshops.')} <a href="${url('videos', '#ep5')}">${x('Voir l’épisode 5 de notre série vidéo', 'Watch episode 5 of our video series')}</a>.</p>
+</div></section>
 <section><div class="wrap split">
   <div class="sticky"><p class="eyebrow">${x('Le sujet', 'The issue')}</p><h2>${x('Dans les campagnes, l’égalité reste à construire', 'In the countryside, equality is still to be built')}</h2></div>
   <div class="prose">
@@ -496,6 +515,27 @@ ${head(c, [[null, x('Ressources', 'Resources')]], x('Centre de ressources', 'Res
 <section id="faq"><div class="wrap split">
   <div class="sticky"><p class="eyebrow">FAQ</p><h2>${x('Vos questions, nos réponses', 'Your questions, our answers')}</h2><p class="lead">${x('Une question manque ?', 'Is a question missing?')} <a href="${url('contact')}">${x('Posez-la nous', 'Ask us')}</a>.</p></div>
   <div>${pages.resources.faq(x).map(([q, a]) => `<details><summary>${q}</summary><div><p>${a}</p></div></details>`).join('')}</div>
+</div></section>
+${cta(c)}`; },
+  },
+
+  // ───────────────────────────── VIDÉOS
+  videos: {
+    slug: { fr: 'videos', en: 'en/videos' },
+    title: { fr: 'Erasmus+ décrypté : la série vidéo', en: 'Erasmus+ decoded: the video series' },
+    desc: { fr: 'Cinq vidéos d’une minute pour comprendre Erasmus+ : qui peut partir, les trois portes d’entrée, l’inclusion, monter un projet, et Cross Borders en action.', en: 'Five one-minute videos (in French) to understand Erasmus+: who can go, the three ways in, inclusion, setting up a project, and Cross Borders in action.' },
+    ld: ({ x, site }, here) => episodes.map(([fr, en, dfr, den, dur], i) => ({ '@context': 'https://schema.org', '@type': 'VideoObject', name: `Erasmus+ décrypté — ${i + 1}. ${fr}`, description: x(dfr, den), inLanguage: 'fr', duration: dur, uploadDate: '2026-11-12',
+      thumbnailUrl: new URL(`${x('../', '../../')}assets/videos/erasmus-decrypte-ep${i + 1}.jpg`, here).href, contentUrl: new URL(`${x('../', '../../')}assets/videos/erasmus-decrypte-ep${i + 1}.mp4`, here).href, publisher: { '@type': 'NGO', name: site.name } })),
+    body: c => { const { x, url } = c; return `
+${head(c, [[null, x('Vidéos', 'Videos')]], x('Série vidéo', 'Video series'), x('Erasmus+ décrypté', 'Erasmus+ decoded'), x('Cinq épisodes d’une minute pour comprendre le programme Erasmus+, sans jargon. Présentés par Hafid Boutchakkoucht, fondateur et président de Cross Borders.', 'Five one-minute episodes to understand the Erasmus+ programme, jargon-free. Presented by Hafid Boutchakkoucht, founder and president of Cross Borders. The videos are in French.'))}
+<section><div class="wrap">
+  <div class="episodes">${episodes.map(([fr, en, dfr, den], i) => `<article class="episode reveal" id="ep${i + 1}">
+    <video controls playsinline preload="none" poster="${c.asset(`videos/erasmus-decrypte-ep${i + 1}.jpg`)}" width="1080" height="1920" aria-label="${x('Épisode', 'Episode')} ${i + 1} — ${x(fr, en)}"><source src="${c.asset(`videos/erasmus-decrypte-ep${i + 1}.mp4`)}" type="video/mp4"></video>
+    <div><p class="num">${x('ÉPISODE', 'EPISODE')} ${String(i + 1).padStart(2, '0')}</p><h2>${x(fr, en)}</h2><p>${x(dfr, den)}</p>
+    <p><a class="arrow" href="${c.asset(`videos/erasmus-decrypte-ep${i + 1}.mp4`)}" download>${x('Télécharger la vidéo', 'Download the video')}</a></p></div>
+  </article>`).join('')}</div>
+  <div class="eu" style="color:var(--ink-2);border-color:var(--line);margin-top:40px">${c.euFlag()}<p style="margin:0">${euNote(x)}</p></div>
+  <p class="note" style="margin-top:20px">${x('Pour aller plus loin : nos guides, la liste de préparation et le glossaire sont dans le', 'To go further: our guides, checklist and glossary are in the')} <a href="${url('resources')}">${x('centre de ressources', 'resource centre')}</a>.</p>
 </div></section>
 ${cta(c)}`; },
   },
